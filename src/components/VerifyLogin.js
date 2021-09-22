@@ -11,12 +11,13 @@ export default function Home({location}) {
   const [authState, setAuthState] = useState();
   const [user, setUser] = useState();
   console.log("location ", location);
-  const pathname = location.pathname.split("/")[2];
-
+  const pathname = location.href.split("/")[location.href.split("/").length - 1];
+  console.log(pathname)
   const signIn = async(challenge) => {
     try {
         const [email, code] = challenge.split(',');
-        const user = await Auth.signIn(email);
+        const new_email = email.replace("%40", "@");
+        const user = await Auth.signIn(new_email);
         console.log("user", user);
         const challegnegnew = await Auth.sendCustomChallengeAnswer(user, code);
         console.log("challegnegnew ", challegnegnew);
